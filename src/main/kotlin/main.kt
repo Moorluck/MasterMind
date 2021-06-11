@@ -106,6 +106,9 @@ fun checkMisplaced(listToTest : MutableList<Int>, listToFind : MutableList<Int>)
                 i++
             }
         }
+        else {
+            valuesNotTested.remove(value)
+        }
     }
 
     return result
