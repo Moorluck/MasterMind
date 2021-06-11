@@ -15,15 +15,15 @@ fun main() {
 
         val nbrOfModality = checkModality(choice)
         val nbrOfElement = checkElement(choice)
-        val nbrOfTry = checkTry(choice)
+        val maxNbrOfTry = checkTry(choice)
 
         val listToFind = generateListOfRandomNumbers(nbrOfElement, nbrOfModality)
         print(listToFind)
 
         // Début de l'autre boucle
-        var score = 0
+        var nbrOfTry = 0
 
-        while (!win && score < nbrOfTry) {
+        while (!win && nbrOfTry < maxNbrOfTry) {
             val listToTest = mutableListOf<Int>()
 
             println("A vous de deviner !")
@@ -42,11 +42,11 @@ fun main() {
         """.trimMargin())
 
             win = checkWin(listToTest, listToFind)
-            score++
+            nbrOfTry++
         }
 
         if (win) {
-            println("Bravo, vous avez trouvé tous les éléments (score : $score) ! Voulez-vous recommencer ? (o/n)")
+            println("Bravo, vous avez trouvé tous les éléments (score : ${calculateScore(nbrOfTry, choice)}) ! Voulez-vous recommencer ? (o/n)")
             quit = !checkWantToRestart(readLine())
         }
         else {
@@ -131,3 +131,11 @@ fun checkWin(listToTest : MutableList<Int>, listToFind : MutableList<Int>) : Boo
 }
 
 fun checkWantToRestart(choice: String?) : Boolean = choice == "o"
+
+fun calculateScore(nbrOfTry : Int, choice: String?) : Int {
+    return when (choice) {
+        "1" -> 100/nbrOfTry
+        "3" -> 200/nbrOfTry
+        else -> 150/nbrOfTry
+    }
+}
