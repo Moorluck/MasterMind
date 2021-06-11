@@ -17,7 +17,8 @@ fun main() {
         val nbrOfElement = checkElement(choice)
         val maxNbrOfTry = checkTry(choice)
 
-        val listToFind = generateListOfRandomNumbers(nbrOfElement, nbrOfModality)
+        // val listToFind = generateListOfRandomNumbers(nbrOfElement, nbrOfModality)
+        val listToFind = mutableListOf<Int>(9, 4, 4, 7)
         print(listToFind)
 
         // Début de l'autre boucle
@@ -45,13 +46,12 @@ fun main() {
             nbrOfTry++
         }
 
-        if (win) {
+        quit = if (win) {
             println("Bravo, vous avez trouvé tous les éléments (score : ${calculateScore(nbrOfTry, choice)}) ! Voulez-vous recommencer ? (o/n)")
-            quit = !checkWantToRestart(readLine())
-        }
-        else {
+            !checkWantToRestart(readLine())
+        } else {
             println("Dommage, vous n'avez pas su trouver les éléments ! Voulez-vous recommencer ? (o/n)")
-            quit = !checkWantToRestart(readLine())
+            !checkWantToRestart(readLine())
         }
 
         if (!quit) {
@@ -87,16 +87,23 @@ fun checkMisplaced(listToTest : MutableList<Int>, listToFind : MutableList<Int>)
 
     var result = 0
 
+
+
     for ((index, value) in listToTest.withIndex()) {
 
         val alreadyWellPlaced = value == listToFind[index]
 
         if (!alreadyWellPlaced) {
-            for ((indexToFind, valueToFind) in listToFind.withIndex()) {
-                val valueAlreadyFound = listToTest[indexToFind] == listToFind[indexToFind]
-                if (value == valueToFind && !valueAlreadyFound) {
+            val valueTested = mutableListOf<Int>()
+            var i = 0
+            while (i < listToFind.size) {
+                val valueAlreadyFound = listToTest[i] == listToFind[i]
+                val valueAlreadyTested = valueTested.contains(listToFind[i])
+                if (value == listToFind[i] && !valueAlreadyFound && !valueAlreadyTested) {
                     result++
+                    valueTested.add(listToFind[i])
                 }
+                i++
             }
         }
     }
