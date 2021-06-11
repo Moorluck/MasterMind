@@ -86,8 +86,6 @@ fun checkMisplaced(listToTest : MutableList<Int>, listToFind : MutableList<Int>)
 
     var result = 0
 
-
-
     for ((index, value) in listToTest.withIndex()) {
 
         val alreadyWellPlaced = value == listToFind[index]
