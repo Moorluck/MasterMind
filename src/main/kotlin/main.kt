@@ -86,19 +86,22 @@ fun checkMisplaced(listToTest : MutableList<Int>, listToFind : MutableList<Int>)
 
     var result = 0
 
+    val valuesNotTested = mutableListOf<Int>()
+    valuesNotTested.addAll(listToFind.toMutableList())
+
     for ((index, value) in listToTest.withIndex()) {
 
         val alreadyWellPlaced = value == listToFind[index]
 
         if (!alreadyWellPlaced) {
-            val valueTested = mutableListOf<Int>()
+
             var i = 0
             while (i < listToFind.size) {
                 val valueAlreadyFound = listToTest[i] == listToFind[i]
-                val valueAlreadyTested = valueTested.contains(listToFind[i])
-                if (value == listToFind[i] && !valueAlreadyFound && !valueAlreadyTested) {
+                val isValueNotTested = valuesNotTested.contains(listToFind[i])
+                if (value == listToFind[i] && !valueAlreadyFound && isValueNotTested) {
                     result++
-                    valueTested.add(listToFind[i])
+                    valuesNotTested.remove(listToFind[i])
                 }
                 i++
             }
