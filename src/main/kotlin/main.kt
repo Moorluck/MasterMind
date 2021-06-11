@@ -17,8 +17,7 @@ fun main() {
         val nbrOfElement = checkElement(choice)
         val maxNbrOfTry = checkTry(choice)
 
-        // val listToFind = generateListOfRandomNumbers(nbrOfElement, nbrOfModality)
-        val listToFind = mutableListOf<Int>(9, 4, 4, 7)
+        val listToFind = generateListOfRandomNumbers(nbrOfElement, nbrOfModality)
         print(listToFind)
 
         // Début de l'autre boucle
